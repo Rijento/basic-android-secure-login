@@ -23,6 +23,13 @@ public class HashEngine {
         PBEKeySpec spec = new PBEKeySpec(input, salt, PBKDF2_ITERATIONS, HASH_BYTE_SIZE);
         SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA512");
         byte[] hash = skf.generateSecret(spec).getEncoded();
-        return new byte[][]{salt, hash};
+        return new byte[][]{hash, salt};
+    }
+
+    public byte[][] saltAndHash(char[] input, byte[] salt) throws NoSuchAlgorithmException, InvalidKeySpecException {
+        PBEKeySpec spec = new PBEKeySpec(input, salt, PBKDF2_ITERATIONS, HASH_BYTE_SIZE);
+        SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA512");
+        byte[] hash = skf.generateSecret(spec).getEncoded();
+        return new byte[][]{hash, salt};
     }
 }
