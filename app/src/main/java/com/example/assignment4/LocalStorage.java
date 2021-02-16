@@ -27,11 +27,13 @@ public class LocalStorage {
     }
 
 
-    public List<User> loadStorage() throws IOException {
+    public List<User> loadDatabase() throws IOException {
         List<User> users = new ArrayList<>();
         String row;
         while ((row = reader.readLine()) != null) {
-            users.add(new User(row));
+            if (row.length() > 4) { //minimum theoretical length is 5. just to ensure any BS is caught.
+                users.add(new User(row));
+            }
         }
         return users;
     }
