@@ -17,7 +17,7 @@ public class HashEngine {
     }
 
     public byte[][] saltAndHash(char[] input) throws NoSuchAlgorithmException, InvalidKeySpecException {
-        byte salt[] = new byte[SALT_BYTE_SIZE];
+        byte[] salt = new byte[SALT_BYTE_SIZE];
         random.nextBytes(salt);
         return saltAndHash(input, salt);
     }
