@@ -7,7 +7,6 @@ import android.util.Log;
 import androidx.annotation.RequiresApi;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -35,15 +34,14 @@ public class ServerEmulator { // Didn't want to actually set up a server, so I m
 
     private User getUser(String username) {
         for (User user : db) {
-            if (user.equals(username)) {
+            if (user.getUsername().equals(username)) {
                 return user;
             }
         }
         return null;
     }
 
-    private List<User> decodeAndLoad() throws IOException, NoSuchAlgorithmException, BadPaddingException,
-            NoSuchPaddingException, IllegalBlockSizeException, InvalidKeyException {
+    private List<User> decodeAndLoad() throws IOException, BadPaddingException, IllegalBlockSizeException {
         List<String> rows = storage.loadDatabase();
         List<User> users = new ArrayList<>();
         for (String row : rows) {
@@ -58,17 +56,8 @@ public class ServerEmulator { // Didn't want to actually set up a server, so I m
         return users;
     }
 
-//    private byte[] getUserSalt(String username) {
-//        User user = getUser(username);
-//        if (user != null) {
-//            return user.getUserSalt();
-//        }
-//        return null;
-//    }
-
     public int registerUser (String username, String password) throws IOException,
-            IllegalBlockSizeException, NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException,
-            BadPaddingException {
+            IllegalBlockSizeException, BadPaddingException {
         if(username.length() < 1 || password.length() < 1) {return 0;}
         if (getUser(username)!= null) {
             return 1;
@@ -82,18 +71,18 @@ public class ServerEmulator { // Didn't want to actually set up a server, so I m
         return 2;
     }
 
-    public int attemptLogin (String username, String password) {
+    public boolean attemptLogin (String username, String password) {
         User tempUser = new User(username, password);
         User attempting = getUser(username);
         if (attempting != null) {
             if (attempting.equals(tempUser)) {
-                return 2; // User successfully logged in.
+                return true; // User successfully logged in.
             } else {
-                return 1; // Password Incorrect
+                return false; // Password Incorrect
             }
 
         } else {
-            return 0; // user does not exist
+            return false; // user does not exist
         }
     }
 

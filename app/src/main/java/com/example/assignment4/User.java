@@ -13,18 +13,15 @@ import java.util.Arrays;
 public class User {
     private final String username;
     private final String password;
-//    private final byte[] userSalt;
     User (String uName, String pass) {
         username = uName;
         password = pass;
-//        userSalt = uSalt;
     }
 
     User (String input) { // straight from the csv
         String[] data = input.split(",");
         username = data[0];
         password = data[1];
-//        userSalt = data[2].getBytes(StandardCharsets.UTF_16);
     }
 
     public String getUsername() {
@@ -34,10 +31,6 @@ public class User {
     public String getPassword() {
         return password;
     }
-
-//    public byte[] getUserSalt() {
-//        return userSalt;
-//    }
 
     @Override
     public boolean equals(@Nullable Object obj) {
@@ -51,12 +44,4 @@ public class User {
             return false;
         }
     }
-
-//    @NonNull
-//    @Override
-//    public String toString() {
-//        String pHashString = new String(passwordHash, StandardCharsets.UTF_16);
-//        String uSaltString = new String(userSalt, StandardCharsets.UTF_16);
-//        return username+','+pHashString+','+uSaltString;
-//    }
 }

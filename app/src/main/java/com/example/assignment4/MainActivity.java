@@ -1,15 +1,14 @@
 package com.example.assignment4;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.IOException;
 import java.security.InvalidKeyException;
@@ -57,17 +56,11 @@ public class MainActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int outcome = finalServer.attemptLogin(usernameInput.getText().toString(), passwordInput.getText().toString());
-                switch (outcome) {
-                    case 0:
-                        statusBar.setText("ERROR: User does not exist.");
-                        break;
-                    case 1:
-                        statusBar.setText("ERROR: Incorrect Password.");
-                        break;
-                    case 2:
-                        statusBar.setText("Login Successful!");
-                        break;
+                boolean outcome = finalServer.attemptLogin(usernameInput.getText().toString(), passwordInput.getText().toString());
+                if (outcome) {
+                    statusBar.setText("Login Successful!");
+                } else {
+                    statusBar.setText("ERROR: Invalid Username or Wrong Password.");
                 }
                 usernameInput.setText("");
                 passwordInput.setText("");
@@ -84,12 +77,6 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 } catch (IllegalBlockSizeException e) {
                     e.printStackTrace();
-                } catch (NoSuchPaddingException e) {
-                    e.printStackTrace();
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
-                } catch (InvalidKeyException e) {
-                    e.printStackTrace();
                 } catch (BadPaddingException e) {
                     e.printStackTrace();
                 }
@@ -104,8 +91,8 @@ public class MainActivity extends AppCompatActivity {
                     case 2:
                         statusBar.setText("Registration Successful!");
                 }
-
-
+                usernameInput.setText("");
+                passwordInput.setText("");
             }
         });
 

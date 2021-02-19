@@ -2,32 +2,24 @@ package com.example.assignment4;
 
 import android.content.Context;
 import android.os.Build;
-import android.os.Environment;
 
 import androidx.annotation.RequiresApi;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
 import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
-import javax.crypto.Cipher;
 
 @RequiresApi(api = Build.VERSION_CODES.KITKAT)
 public class EncryptEngine {
@@ -39,7 +31,8 @@ public class EncryptEngine {
     private final FileOutputStream writer;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    EncryptEngine(Context context) throws IOException, NoSuchAlgorithmException, InvalidKeyException, NoSuchPaddingException {
+    EncryptEngine(Context context) throws IOException, NoSuchAlgorithmException, InvalidKeyException,
+            NoSuchPaddingException {
         File test =  new File(context.getFilesDir(), "key.key");
         boolean existsFlag = test.exists();
         test.createNewFile();
@@ -132,11 +125,11 @@ public class EncryptEngine {
         return theKey;
     }
 
-    public byte[] encrypt(String input) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, BadPaddingException, IllegalBlockSizeException {
+    public byte[] encrypt(String input) throws BadPaddingException, IllegalBlockSizeException {
         return encrypter.doFinal(input.getBytes());
     }
 
-    public String decrypt(byte[] input) throws InvalidKeyException, NoSuchPaddingException, NoSuchAlgorithmException, BadPaddingException, IllegalBlockSizeException {
+    public String decrypt(byte[] input) throws BadPaddingException, IllegalBlockSizeException {
         return new String(decrypter.doFinal(input));
     }
 
