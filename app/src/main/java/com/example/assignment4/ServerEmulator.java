@@ -59,9 +59,7 @@ public class ServerEmulator { // Didn't want to actually set up a server, so I m
     public int registerUser (String username, String password) throws IOException,
             IllegalBlockSizeException, BadPaddingException {
         if(username.length() < 1 || password.length() < 1) {return 0;}
-        if (getUser(username)!= null) {
-            return 1;
-        }
+        if (getUser(username)!= null) { return 1; }
         byte[] uNameEncrypted = encryptEngine.encrypt(username);
         String uNameHex = encryptEngine.encodeHex(uNameEncrypted);
         byte[] passEncrypted = encryptEngine.encrypt(password);
@@ -77,13 +75,8 @@ public class ServerEmulator { // Didn't want to actually set up a server, so I m
         if (attempting != null) {
             if (attempting.equals(tempUser)) {
                 return true; // User successfully logged in.
-            } else {
-                return false; // Password Incorrect
-            }
-
-        } else {
-            return false; // user does not exist
-        }
+            } else { return false;} // Password Incorrect
+        } else { return false; } // user does not exist
     }
 
     public void shutdown() throws IOException {

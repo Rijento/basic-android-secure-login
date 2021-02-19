@@ -20,8 +20,6 @@ import javax.crypto.NoSuchPaddingException;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class MainActivity extends AppCompatActivity {
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,9 +48,8 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         assert server != null;
-
-
         ServerEmulator finalServer = server;
+
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
